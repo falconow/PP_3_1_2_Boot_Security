@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+</head>
+
+<style>
+    input {
+        width: 20%;
+        padding: 8px 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-size: 16px;;
+    }
+    span {
+        width: 20%;
+        padding: 8px 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 12px 18px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+</style>
+
+<body>
+<div>
+    <h1>Создание пользователя</h1>
+    <form th:action="@{/admin/new}"  th:object="${user}" th:method="POST">
+        <span>Имя</span>
+        <br>
+        <input type="text" th:field="${user.firstName}"/>
+        <br>
+        <span>Фамилия</span>
+        <br>
+        <input type="text" th:field="${user.lastName}"/>
+        <br>
+        <span>Email</span>
+        <br>
+        <input type="text" th:field="${user.email}"/>
+        <br>
+        <span>Телефон</span>
+        <br>
+        <input type="text" th:field="${user.phone}"/>
+        <br>
+        <span>Логин</span>
+        <br>
+        <input type="text" th:field="${user.login}"/>
+        <br>
+        <span>Пароль</span>
+        <br>
+        <input type="password" th:field="${user.password}"/>
+        <br>
+        <span>Выбор роли</span>
+        <br>
+        <input name="roles" type="checkbox"
+               th:each="role : ${allRoles}"
+               th:text="${role.role}"
+               th:value="${role.id}"
+        />
+        <br>
+        <br>
+        <input class="button" type="submit" value="Создать">
+    </form>
+
+
+
+</div>
+</body>
+</html>

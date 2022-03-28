@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administration</title>
+</head>
+<style>
+    table.minimalistBlack {
+        border: 3px solid #000000;
+        width: 50%;
+        text-align: left;
+        border-collapse: collapse;
+    }
+    table.minimalistBlack td, table.minimalistBlack th {
+        border: 1px solid #000000;
+        padding: 5px 4px;
+    }
+    table.minimalistBlack td {
+        font-size: 23px;
+    }
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+    .btn-link {
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+        color: #0000EE;
+        padding: 0;
+        text-decoration: underline;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+</style>
+<body>
+<div th:align="center">
+    <h1>Управление пользователями</h1>
+    <table class="minimalistBlack">
+        <tr th:align="center">
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>E-mail</td>
+            <td>Номер Телефона</td>
+            <td>Права доступа</td>
+            <td>Действие</td>
+        </tr>
+        <tr th:each ="user : ${listUsers}">
+
+            <td th:utext="${user.firstName}">...</td>
+            <td th:utext="${user.lastName}">...</td>
+            <td th:utext="${user.email}">...</td>
+            <td th:utext="${user.phone}">...</td>
+            <td>
+                <span th:each="role : ${user.getCollectionsRoles()}" th:text="${role.getRole()}"></span>
+            </td>
+            <td>
+                <a th:href="@{/admin/{id}/edit(id = ${user.id})}">
+                    <span>Редактировать</span>
+                </a>
+
+                <form th:method="DELETE" th:action="@{/admin/delete/{id}(id = ${user.id})}">
+                    <input class="btn-link" type="submit" value="Удалить">
+                </form>
+
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <body>
+    <form th:action="@{/admin/new}">
+        <button class="button" type="submit">Создать пользователя</button>
+    </form>
+
+
+</div>
+</body>
+</html>

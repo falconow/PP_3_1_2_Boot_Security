@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+</head>
+
+<style>
+    input {
+        width: 20%;
+        padding: 8px 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-size: 16px;;
+    }
+    span {
+        width: 20%;
+        padding: 8px 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 12px 18px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+</style>
+
+<body>
+<div>
+    <h1>Редактирование пользователя</h1>
+    <form th:action="@{/admin/{id}/edit(id=${user.id})}" th:object="${user}" th:method="PUT">
+        <span>Имя</span>
+        <br>
+        <input type="text" th:field="*{firstName}"/>
+        <br>
+        <span>Фамилия</span>
+        <br>
+        <input type="text" th:field="*{lastName}"/>
+        <br>
+        <span>Email</span>
+        <br>
+        <input type="text" th:field="*{email}"/>
+        <br>
+        <span>Телефон</span>
+        <br>
+        <input type="text" th:field="*{phone}"/>
+        <br>
+        <span>Логин</span>
+        <br>
+        <input type="text" th:field="*{login}"/>
+        <br>
+        <span>Пароль</span>
+        <br>
+        <input type="password" th:field="*{password}"/>
+        <br>
+        <br>
+        <input class="button" type="submit" value="Создать">
+    </form>
+
+
+</div>
+</body>
+</html>

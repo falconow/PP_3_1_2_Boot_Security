@@ -4,32 +4,30 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.RolesCreationDto;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
 
 
 @Controller
 public class UserController {
     private final UserService userService;
+    private final RoleService roleService;
     private Logger logger = Logger.getLogger(UserController.class.getName());
 
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -49,8 +47,7 @@ public class UserController {
     public String printFormCreate(Model model) {
         RolesCreationDto rolesSelected = new RolesCreationDto();
         model.addAttribute("user", new User());
-        model.addAttribute("allRoles", userService.getAllRoles());
-        model.addAttribute("selectRoles", new ArrayList<>());
+        model.addAttribute("allRoles", roleService.getAllRoles());
         return "createUserForm";
     }
 
@@ -66,7 +63,7 @@ public class UserController {
     @PostMapping(value = "/admin/new")
     public String createUser(@ModelAttribute User user, @RequestParam("roles") List<Long> selectRoles) {
         //logger.info(selectRoles.toString());
-        List<Role> roles = selectRoles.stream().map(userService::findRoleById).toList();
+        List<Role> roles = selectRoles.stream().map(roleService::findRoleById).toList();
         user.setCollectionsRoles(roles);
         userService.add(user);
         return "redirect:/admin";
@@ -93,7 +90,5 @@ public class UserController {
         model.addAttribute("user", user);
         return "user";
     }
-
-
 
 }

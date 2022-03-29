@@ -17,14 +17,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    private final RoleDao roleDao;
     PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder encoder) {
-
+    public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
         this.userDao = userDao;
-        this.roleDao = roleDao;
         this.encoder = encoder;
     }
 
@@ -61,13 +58,5 @@ public class UserServiceImpl implements UserService {
         return userDao.getAll();
     }
 
-    @Override
-    public List<Role> getAllRoles() {
-        return roleDao.getAll();
-    }
 
-    @Override
-    public Role findRoleById(Long id) {
-        return roleDao.findById(id);
-    }
 }

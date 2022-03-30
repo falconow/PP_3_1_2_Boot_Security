@@ -4,9 +4,7 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.transaction.Transactional;
@@ -17,7 +15,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
+
 
     @Autowired
     public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
@@ -26,36 +25,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user) {
+    public void addUser(User user) {
         String password = user.getPassword();
         user.setPassword(encoder.encode(password));
-        userDao.add(user);
+        userDao.addUser(user);
     }
 
     @Override
-    public void delete(Long id) {
-        userDao.delete(id);
+    public void deleteUser(Long id) {
+        userDao.deleteUser(id);
     }
 
     @Override
-    public void update(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        userDao.update(user);
+    public void updateUser(User user) {
+        String pass = user.getPassword();
+        if (pass.isEmpty()) {
+            String password = userDao.findUserById(user.getId()).getPassword();
+            user.setPassword(password);
+        } else {
+            user.setPassword(encoder.encode(user.getPassword()));
+        }
+        userDao.updateUser(user);
     }
 
     @Override
-    public User findById(Long id) {
-        return userDao.findById(id);
+    public User findUserById(Long id) {
+        return userDao.findUserById(id);
     }
 
     @Override
-    public User findByLogin(String login) {
-        return userDao.findByLogin(login);
+    public User findUserByLogin(String login) {
+        return userDao.findUserByLogin(login);
     }
 
     @Override
-    public List<User> getAll() {
-        return userDao.getAll();
+    public List<User> getAllUser() {
+        return userDao.getAllUser();
     }
 
 

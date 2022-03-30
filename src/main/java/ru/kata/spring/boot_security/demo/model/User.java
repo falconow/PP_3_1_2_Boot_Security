@@ -5,9 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -48,7 +46,7 @@ public class User implements UserDetails {
            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
    )
-   private List<Role> CollectionsRoles = new ArrayList<>();
+   private List<Role> roles = new ArrayList<>();
 
 
    public User() {}
@@ -103,7 +101,7 @@ public class User implements UserDetails {
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return CollectionsRoles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
+      return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
    }
 
    public String getPassword() {
@@ -140,12 +138,12 @@ public class User implements UserDetails {
    }
 
    public List<Role> getCollectionsRoles() {
-      return CollectionsRoles;
+      return roles;
    }
 
 
    public void setCollectionsRoles(List<Role> collectionsRoles) {
-      CollectionsRoles = collectionsRoles;
+      roles = collectionsRoles;
    }
 
    @Override

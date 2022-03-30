@@ -3,8 +3,25 @@
 <head>
     <title>Страница пользователя</title>
 </head>
+<style>
+    .button2 {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 16px;
+        background-color: red;
+        color: aliceblue;
+    }
+</style>
 <body>
-<h1 th:text="|Пользователь ${user.firstName} ${user.lastName}|"></h1>
+<h1 th:text="|Страница пользователя ${user.firstName} ${user.lastName}|"></h1>
+<h3 th:text="|email: ${user.email}|"></h3>
+<h3 th:text="|Телефон: ${user.phone}|"></h3>
+
+
+<form th:action="@{/logout}" method="GET" >
+    <button class="button2" type="submit">Выход</button>
+</form>
 
 
 </body>

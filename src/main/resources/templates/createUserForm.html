@@ -12,13 +12,13 @@
         padding: 8px 8px;
         margin: 8px 0;
         box-sizing: border-box;
-        font-size: 16px;;
+        font-size: 16px;
     }
     input[type="checkbox"] {
         padding: 8px 8px;
         margin: 8px 8px;
         box-sizing: border-box;
-        font-size: 22px;;
+        font-size: 16px;
     }
 
     input[type="password"] {
@@ -26,7 +26,7 @@
         padding: 8px 8px;
         margin: 8px 0;
         box-sizing: border-box;
-        font-size: 16px;;
+        font-size: 16px;
     }
     span {
         width: 20%;
@@ -45,6 +45,15 @@
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
+    }
+
+    .button2 {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 16px;
+        background-color: red;
+        color: aliceblue;
     }
 
 </style>
@@ -75,7 +84,7 @@
         <br>
         <span>Пароль</span>
         <br>
-        <input type="password" th:field="${user.password}"/>
+        <input th:type="password" th:name="password"  th:value="${user.password}"/>
         <br>
         <span>Выбор роли</span>
         <br>
@@ -87,6 +96,11 @@
         <br>
         <br>
         <input class="button" type="submit" value="Создать">
+
+    </form>
+
+    <form th:action="@{/logout}" method="GET" >
+        <button class="button2" type="submit">Выход</button>
     </form>
 
 

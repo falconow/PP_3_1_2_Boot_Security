@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
-
-import javax.persistence.SecondaryTable;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -21,11 +19,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAllRoles() {
-        return roleDao.getAll();
+        return roleDao.getAllRole();
     }
 
     @Override
     public Role findRoleById(Long id) {
-        return roleDao.findById(id);
+        return roleDao.findRoleById(id);
     }
+
 }

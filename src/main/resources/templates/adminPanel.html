@@ -41,6 +41,15 @@
         font-size: inherit;
     }
 
+    .button2 {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 16px;
+        background-color: red;
+        color: aliceblue;
+    }
+
 </style>
 <body>
 <div th:align="center">
@@ -61,7 +70,7 @@
             <td th:utext="${user.email}">...</td>
             <td th:utext="${user.phone}">...</td>
             <td>
-                <span th:each="role : ${user.getCollectionsRoles()}" th:text="${role.getRole()}"></span>
+                <span th:each="role : ${user.getCollectionsRoles()}" th:text="${role.role + ' '}"></span>
             </td>
             <td>
                 <a th:href="@{/admin/{id}/edit(id = ${user.id})}">
@@ -81,6 +90,10 @@
     <body>
     <form th:action="@{/admin/new}">
         <button class="button" type="submit">Создать пользователя</button>
+    </form>
+
+    <form th:action="@{/logout}" method="GET" >
+        <button class="button2" type="submit">Выход</button>
     </form>
 
 

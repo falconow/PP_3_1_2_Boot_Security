@@ -7,12 +7,26 @@
 </head>
 
 <style>
-    input {
+    input[type="text"] {
         width: 20%;
         padding: 8px 8px;
         margin: 8px 0;
         box-sizing: border-box;
-        font-size: 16px;;
+        font-size: 16px;
+    }
+    input[type="checkbox"] {
+        padding: 8px 8px;
+        margin: 8px 8px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    input[type="password"] {
+        width: 20%;
+        padding: 8px 8px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-size: 16px;
     }
     span {
         width: 20%;
@@ -20,7 +34,7 @@
         margin: 8px 0;
         box-sizing: border-box;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 18px;
     }
     .button {
         background-color: #4CAF50; /* Green */
@@ -33,39 +47,62 @@
         font-size: 16px;
     }
 
+    .button2 {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 16px;
+        background-color: red;
+        color: aliceblue;
+    }
+
 </style>
 
 <body>
 <div>
     <h1>Редактирование пользователя</h1>
-    <form th:action="@{/admin/{id}/edit(id=${user.id})}" th:object="${user}" th:method="PUT">
+    <form th:action="@{/admin/{id}/edit(id=${user.id})}"  th:object="${user}" th:method="PUT">
         <span>Имя</span>
         <br>
-        <input type="text" th:field="*{firstName}"/>
+        <input type="text" th:field="${user.firstName}"/>
         <br>
         <span>Фамилия</span>
         <br>
-        <input type="text" th:field="*{lastName}"/>
+        <input type="text" th:field="${user.lastName}"/>
         <br>
         <span>Email</span>
         <br>
-        <input type="text" th:field="*{email}"/>
+        <input type="text" th:field="${user.email}"/>
         <br>
         <span>Телефон</span>
         <br>
-        <input type="text" th:field="*{phone}"/>
+        <input type="text" th:field="${user.phone}"/>
         <br>
         <span>Логин</span>
         <br>
-        <input type="text" th:field="*{login}"/>
+        <input type="text" th:field="${user.login}"/>
         <br>
         <span>Пароль</span>
         <br>
-        <input type="password" th:field="*{password}"/>
+        <input type="password" th:field="${user.password}" autocomplete="on"/>
+        <br>
+        <span>Выбор роли</span>
+        <br>
+        <input name="roles" type="checkbox"
+               th:each="role : ${allRoles}"
+               th:text="${role.role}"
+               th:value="${role.id}"
+               th:checked="${user.collectionsRoles.contains(role)}"
+        />
         <br>
         <br>
-        <input class="button" type="submit" value="Создать">
+        <input class="button" type="submit" value="Сохранить">
     </form>
+
+    <form th:action="@{/logout}" method="GET" >
+        <button class="button2" type="submit">Выход</button>
+    </form>
+
 
 
 </div>
